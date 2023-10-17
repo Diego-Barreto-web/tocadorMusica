@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+
+</head>
+<body>
+    <div class="container-musica">
+        <h1 id="titulo-playlist">Playlist Hashtag</h1>
+        <img id="capa" alt="Capa da Música">
+        <audio id="audio"></audio>
+        <div id="abaixo-capa">
+            <div id="informacoes-musica">
+                <div id="nome-musica">Nome da Música</div>
+                <div id="nome-banda" class="cor-clara">Nome da Banda</div>
+            </div>    
+            <button id="curtir" class="botao cor-clara"><i class="bi bi-heart"></i></button>
+        </div>
+        <div id="barra-progresso">
+            <div id="progresso-atual">
+        
+            </div>
+        </div>
+        <div id="conteiner-botoes">    
+            <button id="embaralhar" class="botao"><i class="bi bi-shuffle"></i></button>
+            <button id="voltar" class="botao botao-navegar"><i class="bi bi-skip-start-fill"></i></button>
+            <button id="play" class="botao botao-maior"><i class="bi bi-play-circle-fill"></i></button>
+            <button id="avancar" class="botao botao-navegar"><i class="bi bi-skip-end-fill"></i></button>
+            <button id="repetir" class="botao"><i class="bi bi-repeat"></i></button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

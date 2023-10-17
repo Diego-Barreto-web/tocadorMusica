@@ -1,0 +1,80 @@
+body {
+    background-image: linear-gradient(
+        rgb(59,88,93),
+        rgb(29,40,42)
+    );
+    height: 100vh;
+    color: white;
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    background-color: inherit;
+    color: inherit;
+    border: none;
+}
+
+.botao {
+    font-size: 1.5em;
+}
+
+.botao-navegar {
+    font-size: 3em;
+}
+
+.botao-maior {
+    font-size: 4em;
+}
+
+.cor-clara {
+    color: rgb(139, 153, 156);
+}
+
+#abaixo-capa {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 3em 0 1em 0;
+}
+#conteiner-botoes {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#capa {
+    width: 450px;
+}
+
+#titulo-playlist {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 1em 0 4em 0;
+}
+
+#nome-musica {
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+
+#barra-progresso {
+    background-color: rgb(139, 153, 156);
+    height: 3px;
+    width: 100%;
+    border-radius: 15px;
+    margin-bottom: 1.5em;
+}
+
+#progresso-atual {
+    --progress : 0%;
+    background-color: white;
+    height: inherit;
+    width: var(--progress);
+    border-radius: inherit;
+}
