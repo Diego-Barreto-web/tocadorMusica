@@ -5,6 +5,7 @@ const capa = document.getElementById('capa');
 const play = document.getElementById('play');
 const next = document.getElementById('avancar');
 const previous = document.getElementById('voltar');
+const likeButton = document.getElementById('curtir');
 const barraProgresso = document.getElementById('progresso-atual');
 const containerProgresso = document.getElementById('container-progresso');
 const shuffleButton = document.getElementById('embaralhar');
@@ -15,28 +16,30 @@ const totalTime = document.getElementById('total-time');
 const asYouWhere = {
     nomeMusica : 'As You Were',
     artist : 'TrackTribe',
-    file: 'as_you_were'
+    file: 'as_you_were',
+    liked: false
 }
 
 const boomBapFlick = {
     nomeMusica : 'Bomm Bap Flick',
     artist : 'Quincas Moreira',
-    file: 'boom_bap_flick'
+    file: 'boom_bap_flick',
+    liked: false
 }
 asYouWhere
 const cantHide = {
     nomeMusica : 'Can\'t Hide',
     artist : 'Otis Mcdonald',
-    file: 'cant_hide'
+    file: 'cant_hide',
+    liked: false
 }
 
 let isPlaying = false;
 let isShuffled = false;
 let repeatOn = false;
-const originalPlaylist = [asYouWhere, boomBapFlick, cantHide];
+const originalPlaylist = JSON.parse(localStorage.getItem('playlist')) ?? [asYouWhere, boomBapFlick, cantHide];
 let sortedPlaylist = [...originalPlaylist];
 let index = 0;
-
 
 function playSong(){
     play.querySelector('.bi').classList.remove('bi-play-circle-fill');
@@ -61,11 +64,25 @@ function playPauseDecider(){
         }
 }
 
+function likeButtonRender() {
+    if (sortedPlaylist[index].liked === true) {
+        likeButton.querySelector('.bi').classList.remove('bi-heart');
+        likeButton.querySelector('.bi').classList.add('bi-heart-fill');
+        likeButton.classList.add('button-active');
+    }
+    else {
+        likeButton.querySelector('.bi').classList.add('bi-heart');
+        likeButton.querySelector('.bi').classList.remove('bi-heart-fill');
+        likeButton.classList.remove('button-active');    
+    }
+}
+
 function iniciarSom(){
     capa.src = `images/${sortedPlaylist[index].file}.webp`;
     som.src = `songs/${sortedPlaylist[index].file}.mp3`;
     nomeMusica.innerText = sortedPlaylist[index].nomeMusica;
     nomeBanda.innerText = sortedPlaylist[index].artist;
+    likeButtonRender();
 }
 
 function previousSong(){
@@ -160,7 +177,16 @@ function updateTotalTime() {
     totalTime.innerText = tollHHMMSS(som.duration);
 }
 
-
+function likeButtonClicked() {
+    if(sortedPlaylist[index].liked===false) {
+        sortedPlaylist[index].liked = true;
+    }
+    else {
+        sortedPlaylist[index].liked = false;
+    }
+    likeButtonRender();
+    localStorage.setItem('playlist', JSON.stringify(originalPlaylist));
+}
 
 iniciarSom();
 
@@ -173,3 +199,4 @@ som.addEventListener('loadedmetadata', updateTotalTime);
 containerProgresso.addEventListener('click', jumpTo)
 shuffleButton.addEventListener('click', shuffleButtonClicked);
 repeatButton.addEventListener('click', repeatButtonClicked);
+likeButton.addEventListener('click', likeButtonClicked);

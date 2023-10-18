@@ -34,6 +34,10 @@ button {
     color: rgb(139, 153, 156);
 }
 
+.button-active {
+    color: rgb(0,183,107);
+}
+
 #abaixo-capa {
     display: flex;
     flex-direction: row;
@@ -89,8 +93,4 @@ button {
     justify-content: space-between;
     font-size: smaller;
     margin-top: 0.5em;
-}
-
-.button-active {
-    color: rgb(0,183,107);
 }
