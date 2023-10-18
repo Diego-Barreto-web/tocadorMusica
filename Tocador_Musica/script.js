@@ -6,6 +6,7 @@ const play = document.getElementById('play');
 const next = document.getElementById('avancar');
 const previous = document.getElementById('voltar');
 const barraProgresso = document.getElementById('progresso-atual');
+const containerProgresso = document.getElementById('container-progresso');
 
 const asYouWhere = {
     nomeMusica : 'As You Were',
@@ -87,9 +88,17 @@ function updateProgressBar(){
     barraProgresso.style.setProperty('--progress', `${barraWidth}%`);
 }
 
+function jumpTo(event){
+    const width = containerProgresso.clientWidth;
+    const clickPosition = event.offsetX;
+    const jumpToTime = (clickPosition/width)*som.duration;
+    som.currentTime = jumpToTime;
+}
+
 iniciarSom();
 
 play.addEventListener('click', playPauseDecider);
 previous.addEventListener('click', previousSong);
 next.addEventListener('click', nextSong);
 som.addEventListener('timeupdate', updateProgressBar);
+containerProgresso.addEventListener('click', jumpTo)

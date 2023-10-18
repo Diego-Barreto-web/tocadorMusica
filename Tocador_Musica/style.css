@@ -68,7 +68,6 @@ button {
     height: 3px;
     width: 100%;
     border-radius: 15px;
-    margin-bottom: 1.5em;
 }
 
 #progresso-atual {
@@ -77,4 +76,8 @@ button {
     height: inherit;
     width: var(--progress);
     border-radius: inherit;
+}
+
+#container-progresso {
+    padding-bottom: 1em;
 }
