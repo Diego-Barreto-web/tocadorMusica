@@ -7,6 +7,7 @@ const next = document.getElementById('avancar');
 const previous = document.getElementById('voltar');
 const barraProgresso = document.getElementById('progresso-atual');
 const containerProgresso = document.getElementById('container-progresso');
+const shuffleButton = document.getElementById('embaralhar');
 
 const asYouWhere = {
     nomeMusica : 'As You Were',
@@ -27,7 +28,9 @@ const cantHide = {
 }
 
 let isPlaying = false;
-const playlist = [asYouWhere, boomBapFlick, cantHide];
+let isShuffled = false;
+const originalPlaylist = [asYouWhere, boomBapFlick, cantHide];
+let sortedPlaylist = [...originalPlaylist];
 let index = 0;
 
 
@@ -55,15 +58,15 @@ function playPauseDecider(){
 }
 
 function iniciarSom(){
-    capa.src = `images/${playlist[index].file}.webp`;
-    som.src = `songs/${playlist[index].file}.mp3`;
-    nomeMusica.innerText = playlist[index].nomeMusica;
-    nomeBanda.innerText = playlist[index].artist;
+    capa.src = `images/${sortedPlaylist[index].file}.webp`;
+    som.src = `songs/${sortedPlaylist[index].file}.mp3`;
+    nomeMusica.innerText = sortedPlaylist[index].nomeMusica;
+    nomeBanda.innerText = sortedPlaylist[index].artist;
 }
 
 function previousSong(){
     if(index === 0){
-        index = playlist.length -1;
+        index = sortedPlaylist.length -1;
     }
     else{
         index -= 1;
@@ -73,7 +76,7 @@ function previousSong(){
 }
 
 function nextSong(){
-    if(index === playlist.length -1){
+    if(index === sortedPlaylist.length -1){
         index = 0;
     }
     else{
@@ -86,6 +89,9 @@ function nextSong(){
 function updateProgressBar(){
     const barraWidth = (som.currentTime/som.duration)*100;
     barraProgresso.style.setProperty('--progress', `${barraWidth}%`);
+    if (som.currentTime === som.duration){
+        nextSong();
+    }
 }
 
 function jumpTo(event){
@@ -95,6 +101,31 @@ function jumpTo(event){
     som.currentTime = jumpToTime;
 }
 
+function shuffleArray(preShuffleArray) {
+    const size = preShuffleArray.length;
+    let  currentIndex = size - 1;
+    while(currentIndex > 0) {
+        let randomIndex = Math.floor(Math.random()*size);
+        let aux = preShuffleArray[currentIndex];
+        preShuffleArray[currentIndex] = preShuffleArray[randomIndex];
+        preShuffleArray[randomIndex] = aux;
+        currentIndex-=1;
+    }
+}
+
+function shuffleButtonClicked() {
+    if(isShuffled === false) {
+        isShuffled = true;
+        shuffleArray(sortedPlaylist);
+        shuffleButton.classList.add('button-active');
+    }
+    else {
+        isShuffled = false;
+        sortedPlaylist = [...originalPlaylist]
+        shuffleButton.classList.remove('button-active');        
+    }
+}
+
 iniciarSom();
 
 play.addEventListener('click', playPauseDecider);
@@ -102,3 +133,4 @@ previous.addEventListener('click', previousSong);
 next.addEventListener('click', nextSong);
 som.addEventListener('timeupdate', updateProgressBar);
 containerProgresso.addEventListener('click', jumpTo)
+shuffleButton.addEventListener('click', shuffleButtonClicked);

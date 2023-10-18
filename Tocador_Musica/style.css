@@ -19,6 +19,7 @@ button {
 
 .botao {
     font-size: 1.5em;
+    cursor: pointer;
 }
 
 .botao-navegar {
@@ -80,4 +81,9 @@ button {
 
 #container-progresso {
     padding-bottom: 1em;
+    cursor: pointer;
+}
+
+.button-active {
+    color: rgb(0,183,107);
 }
