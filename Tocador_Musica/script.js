@@ -8,6 +8,9 @@ const previous = document.getElementById('voltar');
 const barraProgresso = document.getElementById('progresso-atual');
 const containerProgresso = document.getElementById('container-progresso');
 const shuffleButton = document.getElementById('embaralhar');
+const repeatButton = document.getElementById('repetir');
+const songTime = document.getElementById('song-time');
+const totalTime = document.getElementById('total-time');
 
 const asYouWhere = {
     nomeMusica : 'As You Were',
@@ -29,6 +32,7 @@ const cantHide = {
 
 let isPlaying = false;
 let isShuffled = false;
+let repeatOn = false;
 const originalPlaylist = [asYouWhere, boomBapFlick, cantHide];
 let sortedPlaylist = [...originalPlaylist];
 let index = 0;
@@ -86,12 +90,10 @@ function nextSong(){
     playSong();
 }
 
-function updateProgressBar(){
+function updateProgress(){
     const barraWidth = (som.currentTime/som.duration)*100;
     barraProgresso.style.setProperty('--progress', `${barraWidth}%`);
-    if (som.currentTime === som.duration){
-        nextSong();
-    }
+    songTime.innerText = tollHHMMSS(som.currentTime);
 }
 
 function jumpTo(event){
@@ -126,11 +128,48 @@ function shuffleButtonClicked() {
     }
 }
 
+function repeatButtonClicked() {
+    if (repeatOn===false) {
+        repeatOn = true;
+        repeatButton.classList.add('button-active');
+    }
+    else {
+        repeatOn = false;
+        repeatButton.classList.remove('button-active');
+    }
+}
+
+function nextOrRepeat() {
+    if (repeatOn === false){
+        nextSong();
+    }
+    else {
+        playSong();
+    }
+}
+
+function tollHHMMSS(originalNumber) {
+    let hours = Math.floor(originalNumber/3600);
+    let min = Math.floor((originalNumber - hours*3600)/60);
+    let secs = Math.floor(originalNumber - hours*3600 - min*60);
+
+    return`${hours.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function updateTotalTime() {
+    totalTime.innerText = tollHHMMSS(som.duration);
+}
+
+
+
 iniciarSom();
 
 play.addEventListener('click', playPauseDecider);
 previous.addEventListener('click', previousSong);
 next.addEventListener('click', nextSong);
-som.addEventListener('timeupdate', updateProgressBar);
+som.addEventListener('timeupdate', updateProgress);
+som.addEventListener('ended', nextOrRepeat);
+som.addEventListener('loadedmetadata', updateTotalTime);
 containerProgresso.addEventListener('click', jumpTo)
 shuffleButton.addEventListener('click', shuffleButtonClicked);
+repeatButton.addEventListener('click', repeatButtonClicked);
